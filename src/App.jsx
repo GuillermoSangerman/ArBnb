@@ -40,7 +40,7 @@ export default function App() {
             </div>
             <div className="flex justify-center">
               <button className="flex items-center space-x-2 bg-red-500 rounded-xl px-5 py-1">
-                <img className="h-5" src="\src\assets\design\lupawhite.svg" alt="imagen lupa" />
+                <img className="h-5" src="\public\lupawhite.svg" alt="imagen lupa" />
                 <span className="text-white">search</span>
               </button>
             </div>
@@ -56,7 +56,7 @@ export default function App() {
           <li className="border border-slate-200 border-s-0 border-y-0 h-14 p-4">Add location</li>
           <li className="border border-slate-200 border-s-0 border-y-0 h-14 p-4">Add guests</li>
           <li>
-            <img className="h-5" src="\src\assets\design\lupa.svg" alt="imagen lupa" />
+            <img className="h-5" src="\public\lupa.svg" alt="imagen lupa" />
           </li>
         </ul>
       </nav>
