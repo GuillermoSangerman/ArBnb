@@ -1,13 +1,31 @@
 import React, { useEffect, useState } from 'react'
 
+export function ListStays({arrayStays, search, numberGuests, setStays}) {
 
 
-export function ListStays({stays}) {
+    
+    if (!arrayStays) {
+      setStays(arrayStays)
+
+    }
+    if(arrayStays.city === search) {
+       const resut = arrayStays.filter((dato) => search === dato.city)
+       setStays(resut)
+       console.log(resut);
+    }
+//console.log(arrayStays.city, search);
+
+// const ejemplo = [arrayStays].filter((dato) => {
+//     console.log(search === dato.city)
+// }
+//     )
+// console.log(ejemplo);
+    //!search ? "" : locations.filter((dato) => dato.city.toLowerCase().includes(search.toLocaleLowerCase())) maxGuests Turku
 
     return (
         <>
-            {stays &&
-                stays.map(infoApi =>
+            {arrayStays &&
+                arrayStays.map(infoApi =>
                     <li key={infoApi.title} className="m-8 max-w-[361px] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110  duration-300 cursor-pointer">
                         <img className="rounded-[1.5rem] mb-3 object-cover h-[238px]" height={238} width={361} src={infoApi.photo} alt={infoApi.title}  />
                         <div className="flex justify-between px-1">

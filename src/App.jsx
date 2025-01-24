@@ -3,18 +3,24 @@ import { Modal } from "./components/Modal";
 import { useState, useEffect } from "react";
 import { Header } from "./components/Header"
 import { fetchData } from "./utils/fetchData";
+import Loading from "./components/Loading";
 
 export default function App() {
   const [openModal, setOpenModal] = useState(false)
   const [stays, setStays] = useState([])
   const [locations, setLocations] = useState([])
   const [search, setSearch] = useState("")
-  const [numberGuests, setNumberGuests] = useState("Add guests")
+  const [numberGuests, setNumberGuests] = useState("Add")
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetchData("stays.json")
+    setTimeout(() => {
+      fetchData("stays.json")
       .then(data => setStays(data))
       .catch(error => console.error(error))
+      .finally(() => setLoading(false))
+    }, 3000);
+
   }, [])
 
 
@@ -51,9 +57,25 @@ export default function App() {
         stays={stays.length}
       />
       <ul className="md:grid md:grid-cols-2 xl:grid-cols-3">
-        <ListStays
-          stays={stays} />
+        
+            <ListStays
+          search={search}
+          numberGuests={numberGuests}
+          arrayStays={stays}
+          setStays={setStays} />
+
+        
       </ul>
+      {loading &&
+           <div className="md:grid md:grid-cols-2 xl:grid-cols-3 list-none">
+            <Loading/>
+            <Loading/>
+            <Loading/>
+            <Loading/>
+            <Loading/>
+            <Loading/>
+           </div>
+        }
 
     </>
   )
