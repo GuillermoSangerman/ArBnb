@@ -1,21 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { fetchData } from '../utils/fetchData'
-import { Header } from './Header'
 
-export function ListStays() {
 
-    const [stays, setStays] = useState([])
 
-    useEffect(() => {
-        fetchData("stays.json")
-            .then(data => setStays(data))
-            .catch(error => console.error(error))
-    }, [])
-    console.log(stays);
+export function ListStays({stays}) {
 
     return (
         <>
-        <Header/>
             {stays &&
                 stays.map(infoApi =>
                     <li key={infoApi.title} className="m-8 max-w-[361px] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110  duration-300 cursor-pointer">

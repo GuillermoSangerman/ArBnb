@@ -1,12 +1,28 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
+import { fetchData } from '../utils/fetchData'
+import LocalList from './LocalList'
 
-export function Modal({ onClose }) {
-  const [numberGuests, setNumberGuests] = useState(0)
+export function Modal({ onClose, setSearch, locations, search, setLocations, numberGuests, setNumberGuests }) {
+
   const [numberAdutls, setNumberAdutls] = useState(0)
   const [numberChildren, setNumberChildren] = useState(0)
   const [openGuests, setOpenGuests] = useState(false)
 
+
+  useEffect(() => {
+    fetchData("stays.json")
+      .then(data => setLocations(data))
+      .catch(error => console.error(error))
+  }, [])
+
+  const searcher = (e) => {
+    setSearch(e.target.value)
+  }
+
+  const results = !search ? "" : locations.filter((dato) => dato.city.toLowerCase().includes(search.toLocaleLowerCase()))
+
+  
   const openToggle = () => {
     setOpenGuests(true)
   }
@@ -38,12 +54,24 @@ export function Modal({ onClose }) {
             <ul className="flex flex-col lg:flex-row lg:justify-between lg:px-10  border text-neutral-400 border-slate-200 rounded-xl mx-4 h-1/5 lg:mx-20 lg:border-none">
               <li className="flex flex-col  border border-slate-200 h-14 p-4 rounded-xl focus-within:border-black cursor-pointer lg:h-[100%] lg:w-[100%]  shadow-2xl">
                 <label className="text-black text-[0.6rem] font-bold " htmlFor="add_location" >LOCATION</label>
-                <input className='outline-none' id="add_location" type="text" name="add_location" placeholder="Add location" />
+                <input value={search} onChange={searcher} className='outline-none' id="add_location" type="text" name="add_location" placeholder="Add location" />
+                <div>
+                  {results &&
+                    results.map(local =>
+                      <ul className='flex flex-col  mt-12 w-[100%]'>
+                        <LocalList
+                          city={local.city}
+                          setSearch={setSearch}
+                        />
+                      </ul>
+                    )
+                  }
+                </div>
               </li>
               <li onClick={openToggle} className="flex flex-col border border-slate-200  h-14 p-4 rounded-xl border-t-0 focus-within:border-black cursor-pointer lg:w-[100%] lg:h-[100%]  shadow-2xl" >
                 <label className="text-black text-[0.6rem] font-bol cursor-pointer" htmlFor="add_guests" >GUESTS</label>
                 <input min={0} className='outline-none text-ellipsis cursor-pointer' id="add_guests" type="buttom" name="add_guests" placeholder={numberGuests >= 0 ? numberGuests + ` guests` : "Valor no valido"} readOnly />
-                <div className='lg:mt-5'>
+                <div className='lg:mt-5 flex'>
                   {openGuests &&
                     <div>
                       <div className="mx-5 mt-6 h-1/2">
@@ -66,6 +94,7 @@ export function Modal({ onClose }) {
                       </div>
                     </div>
                   }
+
                 </div>
               </li>
 
