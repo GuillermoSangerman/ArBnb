@@ -3,12 +3,11 @@ import { useState } from 'react'
 import { fetchData } from '../utils/fetchData'
 import LocalList from './LocalList'
 
-export function Modal({ onClose, setSearch, locations, search, setLocations, numberGuests, setNumberGuests }) {
+export function Modal({ onClose, setSearch, locations, search, setLocations, numberGuests, setNumberGuests, stays, setStays }) {
 
   const [numberAdutls, setNumberAdutls] = useState(0)
   const [numberChildren, setNumberChildren] = useState(0)
   const [openGuests, setOpenGuests] = useState(false)
-
 
   useEffect(() => {
     fetchData("stays.json")
@@ -22,7 +21,34 @@ export function Modal({ onClose, setSearch, locations, search, setLocations, num
 
   const results = !search ? "" : locations.filter((dato) => dato.city.toLowerCase().includes(search.toLocaleLowerCase()))
 
-  
+  function handleSearch() {
+
+    if (search && !numberGuests) {
+      const res = stays.filter((dato) => search === dato.city + " " + "Finland")
+      setStays(res)
+      return;
+    }
+
+    if (!search && numberGuests) {
+      const res = stays.filter(prod => parseInt(prod.maxGuests) >= parseInt(numberGuests))
+      setStays(res)
+      return;
+    }
+
+    if (search && numberGuests) {
+      const res = stays.filter(product => {
+        let condicion1 = search === product.city + " " + "Finland"
+        let condicion2 = parseInt(product.maxGuests) >= parseInt(numberGuests);
+        return condicion1 && condicion2
+      })
+      setStays(res)
+      return
+    }
+
+    setStays(stays)
+  }
+  console.log(numberGuests);
+
   const openToggle = () => {
     setOpenGuests(true)
   }
@@ -62,6 +88,7 @@ export function Modal({ onClose, setSearch, locations, search, setLocations, num
                         <LocalList
                           city={local.city}
                           setSearch={setSearch}
+                          key={local.title}
                         />
                       </ul>
                     )
@@ -69,8 +96,8 @@ export function Modal({ onClose, setSearch, locations, search, setLocations, num
                 </div>
               </li>
               <li onClick={openToggle} className="flex flex-col border border-slate-200  h-14 p-4 rounded-xl border-t-0 focus-within:border-black cursor-pointer lg:w-[100%] lg:h-[100%]  shadow-2xl" >
-                <label className="text-black text-[0.6rem] font-bol cursor-pointer" htmlFor="add_guests" >GUESTS</label>
-                <input min={0} className='outline-none text-ellipsis cursor-pointer' id="add_guests" type="buttom" name="add_guests" placeholder={numberGuests >= 0 ? numberGuests + ` guests` : "Valor no valido"} readOnly />
+                <label className="text-black text-[0.6rem] font-bold cursor-pointer" htmlFor="add_guests" >GUESTS</label>
+                <input value={!numberGuests ? "Add guests" : numberGuests + " " + " guests"} className='outline-none text-ellipsis cursor-pointer' id="add_guests" type="buttom" name="add_guests" placeholder={numberGuests >= 0 ? numberGuests + ` guests` : "Valor no valido"} readOnly />
                 <div className='lg:mt-5 flex'>
                   {openGuests &&
                     <div>
@@ -102,7 +129,7 @@ export function Modal({ onClose, setSearch, locations, search, setLocations, num
               <li className="flex justify-center h-10 translate-y-52 lg:translate-y-0 mt-2 lg:w-[100%]">
                 <button onClick={onClose} className="flex items-center space-x-2 bg-red-500 rounded-xl px-5 py-2  shadow-2xl">
                   <img className="h-4" src="./icon/lupawhite.svg" alt="imagen lupa" />
-                  <span className="text-white">search</span>
+                  <span onClick={handleSearch} className="text-white">search</span>
                 </button>
               </li>
             </ul>

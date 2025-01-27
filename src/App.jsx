@@ -10,16 +10,16 @@ export default function App() {
   const [stays, setStays] = useState([])
   const [locations, setLocations] = useState([])
   const [search, setSearch] = useState("")
-  const [numberGuests, setNumberGuests] = useState("Add")
+  const [numberGuests, setNumberGuests] = useState(0)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     setTimeout(() => {
       fetchData("stays.json")
-      .then(data => setStays(data))
-      .catch(error => console.error(error))
-      .finally(() => setLoading(false))
-    }, 3000);
+        .then(data => setStays(data))
+        .catch(error => console.error(error))
+        .finally(() => setLoading(false))
+    }, 2000);
 
   }, [])
 
@@ -38,6 +38,8 @@ export default function App() {
           onClose={toggleModal}
           numberGuests={numberGuests}
           setNumberGuests={setNumberGuests}
+          stays={stays}
+          setStays={setStays}
         />
       }
       <nav className="flex flex-col md:flex-row md:justify-between lg:mx-6">
@@ -57,26 +59,25 @@ export default function App() {
         stays={stays.length}
       />
       <ul className="md:grid md:grid-cols-2 xl:grid-cols-3">
-        
-            <ListStays
-          search={search}
-          numberGuests={numberGuests}
-          arrayStays={stays}
-          setStays={setStays} />
 
-        
+        <ListStays
+          arrayStays={stays}
+        />
+
+
       </ul>
       {loading &&
-           <div className="md:grid md:grid-cols-2 xl:grid-cols-3 list-none">
-            <Loading/>
-            <Loading/>
-            <Loading/>
-            <Loading/>
-            <Loading/>
-            <Loading/>
-           </div>
-        }
+        <div className="md:grid md:grid-cols-2 xl:grid-cols-3 list-none">
+          <Loading />
+          <Loading />
+          <Loading />
+          <Loading />
+          <Loading />
+          <Loading />
+        </div>
+      }
 
     </>
   )
 }
+
