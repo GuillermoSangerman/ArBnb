@@ -47,8 +47,8 @@ export default function App() {
           <img src="https://joregesosa.github.io/windbnb_challenge/assets/logo-f7862584.svg" alt="iconoArbnb" />
         </div>
         <ul onClick={toggleModal} className="flex  items-center justify-center border text-neutral-400 border-slate-800 rounded-xl mt-8 mx-8 max-w-[361px] h-14 gap-7 md:px-2 cursor-pointer ">
-          <li className="border border-slate-200 border-s-0 border-y-0 h-14 p-4">{!search ? "Add location" : search + " Finland"}</li>
-          <li className="border border-slate-200 border-s-0 border-y-0 h-14 p-4">{!numberGuests ? "Add guests" : numberGuests + " " + " guests"}</li>
+          <li className="border border-slate-200 border-s-0 border-y-0 h-14 mt-4 p-2">{!search ? "Add location" : search + " Finland"}</li>
+          <li className="border border-slate-200 border-s-0 border-y-0 h-14 mt-4 p-2">{!numberGuests ? "Add guests" : numberGuests + " " + " guests"}</li>
           <li>
             <img className="h-5" src="./icon/lupa.svg" alt="imagen lupa" />
           </li>

@@ -98,7 +98,7 @@ export function Modal({ onClose, setSearch, locations, search, setLocations, num
                 <input value={numberGuests + " guests"} className='outline-none text-ellipsis cursor-pointer' id="add_guests" type="buttom" name="add_guests" placeholder={numberGuests >= 0 ? numberGuests + ` guests` : "Valor no valido"} readOnly />
                 <div className='lg:mt-5 flex items-center'>
                   {openGuests &&
-                    <div className='flex flex-col items-center w-[100%]'>
+                    <div className='flex flex-col items-center w-[100%] mt-6'>
                       <div className="mx-5 mt-6 h-1/2 ">
                         <h2 className="font-bold text-[0.9rem] text-black">Adults</h2>
                         <span className="text-neutral-400 text-[0.9rem]">Ages 13 or above</span>
