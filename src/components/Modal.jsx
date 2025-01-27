@@ -24,7 +24,6 @@ export function Modal({ onClose, setSearch, locations, search, setLocations, num
   function handleSearch() {
     if (search && !numberGuests) {
       const res = stays.filter(dato => search === dato.city)
-      
       setStays(res)
       return;
     }
@@ -86,7 +85,7 @@ export function Modal({ onClose, setSearch, locations, search, setLocations, num
                         <LocalList
                           city={local.city}
                           setSearch={setSearch}
-                         
+
                         />
                       </ul>
                     )
@@ -119,12 +118,9 @@ export function Modal({ onClose, setSearch, locations, search, setLocations, num
                       </div>
                     </div>
                   }
-
                 </div>
               </li>
-
-
-              <li className="flex justify-center h-10 translate-y-52 lg:translate-y-0 mt-2 lg:w-[100%]">
+              <li className="flex justify-center h-10 translate-y-52 lg:translate-y-0 mt-8 lg:w-[100%]">
                 <button onClick={onClose} className="flex items-center space-x-2 bg-red-500 rounded-xl px-5 py-2  shadow-2xl">
                   <img className="h-4" src="./icon/lupawhite.svg" alt="imagen lupa" />
                   <span onClick={handleSearch} className="text-white">search</span>
@@ -133,7 +129,6 @@ export function Modal({ onClose, setSearch, locations, search, setLocations, num
             </ul>
           </nav>
         </div>
-
       </div>
     </>
   )

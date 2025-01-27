@@ -19,10 +19,9 @@ export default function App() {
         .then(data => setStays(data))
         .catch(error => console.error(error))
         .finally(() => setLoading(false))
-    }, 2000);
-
-  }, [])
-
+    }, 1000);
+    console.log("1");
+  }, [numberGuests === 0])
 
   const toggleModal = () => {
     setOpenModal((prevState) => !prevState)
@@ -52,19 +51,15 @@ export default function App() {
           <li>
             <img className="h-5" src="./icon/lupa.svg" alt="imagen lupa" />
           </li>
-
         </ul>
       </nav>
       <Header
         stays={stays.length}
       />
       <ul className="md:grid md:grid-cols-2 xl:grid-cols-3">
-
         <ListStays
           arrayStays={stays}
         />
-
-
       </ul>
       {loading &&
         <div className="md:grid md:grid-cols-2 xl:grid-cols-3 list-none">
@@ -76,8 +71,6 @@ export default function App() {
           <Loading />
         </div>
       }
-
     </>
   )
 }
-
