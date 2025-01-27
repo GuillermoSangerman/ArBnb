@@ -22,9 +22,9 @@ export function Modal({ onClose, setSearch, locations, search, setLocations, num
   const results = !search ? "" : locations.filter((dato) => dato.city.toLowerCase().includes(search.toLocaleLowerCase()))
 
   function handleSearch() {
-
     if (search && !numberGuests) {
-      const res = stays.filter((dato) => search === dato.city + " " + "Finland")
+      const res = stays.filter(dato => search === dato.city)
+      
       setStays(res)
       return;
     }
@@ -37,17 +37,15 @@ export function Modal({ onClose, setSearch, locations, search, setLocations, num
 
     if (search && numberGuests) {
       const res = stays.filter(product => {
-        let condicion1 = search === product.city + " " + "Finland"
+        let condicion1 = search === product.city
         let condicion2 = parseInt(product.maxGuests) >= parseInt(numberGuests);
         return condicion1 && condicion2
       })
       setStays(res)
       return
     }
-
     setStays(stays)
   }
-  console.log(numberGuests);
 
   const openToggle = () => {
     setOpenGuests(true)
@@ -71,37 +69,37 @@ export function Modal({ onClose, setSearch, locations, search, setLocations, num
   return (
     <>
       <div className="fixed bg-black bg-opacity-60 h-screen w-full">
-        <div className=" bg-white h-[80%]">
-          <nav className='h-[100%] w-full'>
+        <div className=" bg-white min-h-[80%]">
+          <nav className='min-h-[100%] w-full'>
             <div className="mx-5 flex  items-center justify-between tracking-tight h-1/6 ">
               <span className="font-bold text-[0.8rem]">Edit your search</span>
               <button onClick={onClose} className="font-bold text-4xl">&times;</button>
             </div>
             <ul className="flex flex-col lg:flex-row lg:justify-between lg:px-10  border text-neutral-400 border-slate-200 rounded-xl mx-4 h-1/5 lg:mx-20 lg:border-none">
-              <li className="flex flex-col  border border-slate-200 h-14 p-4 rounded-xl focus-within:border-black cursor-pointer lg:h-[100%] lg:w-[100%]  shadow-2xl">
+              <li className="flex flex-col  border border-slate-200 h-14 p-4 rounded-xl focus-within:border-black cursor-pointer lg:min-h-[100%] lg:w-[100%]  shadow-2xl">
                 <label className="text-black text-[0.6rem] font-bold " htmlFor="add_location" >LOCATION</label>
-                <input value={search} onChange={searcher} className='outline-none' id="add_location" type="text" name="add_location" placeholder="Add location" />
+                <input value={search} onChange={searcher} className='outline-none' id="add_location" type="search" name="add_location" placeholder="Add location" />
                 <div>
                   {results &&
                     results.map(local =>
-                      <ul className='flex flex-col  mt-12 w-[100%]'>
+                      <ul className='flex flex-col mt-20  lg:mt-8  w-[100%] absolute'>
                         <LocalList
                           city={local.city}
                           setSearch={setSearch}
-                          key={local.title}
+                         
                         />
                       </ul>
                     )
                   }
                 </div>
               </li>
-              <li onClick={openToggle} className="flex flex-col border border-slate-200  h-14 p-4 rounded-xl border-t-0 focus-within:border-black cursor-pointer lg:w-[100%] lg:h-[100%]  shadow-2xl" >
+              <li onClick={openToggle} className="flex flex-col border border-slate-200  h-14 p-4 rounded-xl border-t-0 focus-within:border-black cursor-pointer lg:w-[100%] lg:min-h-[100%]  shadow-2xl" >
                 <label className="text-black text-[0.6rem] font-bold cursor-pointer" htmlFor="add_guests" >GUESTS</label>
-                <input value={!numberGuests ? "Add guests" : numberGuests + " " + " guests"} className='outline-none text-ellipsis cursor-pointer' id="add_guests" type="buttom" name="add_guests" placeholder={numberGuests >= 0 ? numberGuests + ` guests` : "Valor no valido"} readOnly />
-                <div className='lg:mt-5 flex'>
+                <input value={numberGuests + " guests"} className='outline-none text-ellipsis cursor-pointer' id="add_guests" type="buttom" name="add_guests" placeholder={numberGuests >= 0 ? numberGuests + ` guests` : "Valor no valido"} readOnly />
+                <div className='lg:mt-5 flex items-center'>
                   {openGuests &&
-                    <div>
-                      <div className="mx-5 mt-6 h-1/2">
+                    <div className='flex flex-col items-center w-[100%]'>
+                      <div className="mx-5 mt-6 h-1/2 ">
                         <h2 className="font-bold text-[0.9rem] text-black">Adults</h2>
                         <span className="text-neutral-400 text-[0.9rem]">Ages 13 or above</span>
                         <div className="flex items-center justify-start space-x-6 mt-2">
